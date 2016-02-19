@@ -1,0 +1,21 @@
+[{ 
+  "_id": 1,
+  "name":"Cat",
+  "vaccines" : [1,2],
+  "owner": 1
+},
+{"_id": 2,
+  "name":"Dog",
+  "vaccines" : [1,3],
+  "owner": 2
+},
+{"_id": 3,
+  "name":"Horse",
+  "vaccines" : [1,4],
+  "owner": 3
+},
+{"_id": 4,
+  "name":"Tiger",
+  "vaccines" : [3,2],
+  "owner": 4
+}]
