@@ -14,16 +14,16 @@ Then, import the data:
 sh db_scripts/importData.sh
 ```
 
-Finally, run the tests:
-
-```
-npm test
-```
-
-Or run the server:
+Finally, run the server:
 
 ```
 npm start
+```
+
+And then, run the tests:
+
+```
+npm test
 ```
 
 And navigate to http://localhost:3000/animals/1
