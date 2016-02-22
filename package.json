@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start" : "node ./src/api/app.js",
     "test": "mocha test -R spec"
   },
   "author": "Ricardo Pallas",
