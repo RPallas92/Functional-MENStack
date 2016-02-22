@@ -18,15 +18,7 @@ var getPagedAnimalsByPage = function(pageNumber, pageSize){
 
 var addAnimal = function(animal){
 
-	getOwnerById(1).concatenated.fork(
-  function(error) { console.log("EERORRR" + error) }
-, function(data)  { console.log(data) }
-)
- console.log('hack')
 }
-
-
-
 
 //Private functions
 var getNumberOfPages = function (pageSize){
@@ -126,7 +118,6 @@ var getAnimalsByPage = function(pageNumber, pageSize) {
 var ceil = R.curry(Math.ceil)
 
 var createPagedAnimals = R.curry(function(pageNumber, pageSize, numberOfItems, animals) {
-	debugger;
 	return PagedAnimals(pageNumber, pageSize, numberOfItems, animals)
 })
 
