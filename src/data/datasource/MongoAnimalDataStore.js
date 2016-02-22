@@ -17,7 +17,7 @@ var getPagedAnimalsByPage = function(pageNumber, pageSize){
 }
 
 var addAnimal = function(animal){
-
+	return saveAnimal(animal)
 }
 
 //Private functions
@@ -121,9 +121,74 @@ var createPagedAnimals = R.curry(function(pageNumber, pageSize, numberOfItems, a
 	return PagedAnimals(pageNumber, pageSize, numberOfItems, animals)
 })
 
-var getNextAnimalId = function(){
+//Private functions for adding and animal
+
+var getNextIdFor = function(collection){
+	return new Task(function(reject, resolve) {
+		collection.find({}, { sort: [['_id', -1]], limit: 1 }).toArray(function(err, item) {
+			if(err) {
+				reject(err)
+			} else {
+				resolve((R.head(item)._id + 1))
+			}
+		})
+  	})
+}
+
+var addIdToObject = R.curry(function(object, id){
+	var setId = R.set(R.lensProp('_id'), id)
+	return setId(object)
+})
+
+var saveObjectFor = R.curry(function(collection, object){
+	return new Task(function(reject, resolve) {
+		collection.insert(object, function(err, item){
+			if(err){
+				reject(err)
+			} else {
+				resolve(R.head(item.insertedIds))
+			}
+		})
+  	})
+})
+
+var saveObjectAndIdFor = R.curry(function(collection, object){
+	var getNextId = getNextIdFor(collection)
+	var addId = addIdToObject(object)
+	var saveObject = saveObjectFor(collection)
+
+	return R.compose(R.chain(saveObject), R.map(addId))(getNextId)
+})
+
+var saveObjectsAndIdsFor = function(collection, objects){
+	var saveObjectAndId = saveObjectAndIdFor(collection)
+	var saveObjects = R.map(saveObjectAndId, objects)
+	return R.traverse(Task.of, R.identity, saveObjects)
+}
+
+var getFlatAnimal = function(animal, ownerId, vaccineIds){
+	var setOwner = R.set(R.lensProp('owner'))
+	var setVaccines = R.set(R.lensProp('vaccines'))
+	return R.compose(setOwner(ownerId), setVaccines(vaccineIds))(animal)
 
 }
+
+var saveAnimal = function (animal){
+		var getOwner = R.view(R.lensProp('owner'))
+		var getVaccines = R.view(R.lensProp('vaccines'))
+
+		var saveOwnerTask = saveObjectAndIdFor(db.owners, getOwner(animal))
+		var saveVaccinesTask = saveObjectsAndIdsFor(db.vaccines, getVaccines(animal))
+
+		var getFlatAnimalTask = R.lift(getFlatAnimal)(Task.of(animal), saveOwnerTask, saveVaccinesTask)
+		var saveFlatAnimal = saveObjectAndIdFor(db.animals)
+
+		return getFlatAnimalTask.chain(saveFlatAnimal)
+}
+
+
+
+
 
 
 //Exports
