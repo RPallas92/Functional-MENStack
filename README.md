@@ -1,4 +1,4 @@
-# MENStack-Sample
+# Functional-MENStack
 REST API application with Node, Express, MongoDB, Ramda and Mocha
 
 ## Quick start
