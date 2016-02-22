@@ -48,7 +48,7 @@ var getNumberOfAnimals = function(){
 var getRealPageNumberTask = function(pageNumber, pageSize){
 	return getNumberOfPages(pageSize).map(function(number){
 		return pageNumber > number ? number : pageNumber
-	}) 
+	})
 }
 
 
@@ -72,7 +72,7 @@ var getFlatAnimalsByPage =  function (pageNumber, pageSize){
 			resolve(items)
 		}
 	})
-  })	
+  })
 
 }
 
@@ -106,8 +106,8 @@ var getOwnerById = function(ownerId){
 }
 
 var populateAnimal = R.curry(function(animal, owner, vaccines){
-	var setOwner = R.set(R.lensProp('owner'), owner); 
-	var setVaccines = R.set(R.lensProp('vaccines'), vaccines); 
+	var setOwner = R.set(R.lensProp('owner'), owner);
+	var setVaccines = R.set(R.lensProp('vaccines'), vaccines);
 	return R.compose(setOwner, setVaccines)(animal)
 })
 
@@ -138,5 +138,3 @@ var getNextAnimalId = function(){
 //Exports
 module.exports.addAnimal = addAnimal;
 module.exports.getPagedAnimalsByPage = getPagedAnimalsByPage;
-
-
