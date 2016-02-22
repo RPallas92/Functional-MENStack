@@ -27,7 +27,27 @@ npm start
 ```
 
 And navigate to http://localhost:3000/animals/1
+
 You can also post new animals.
+POST to http://localhost:3000/animal
+
+And the body:
+```
+{
+    "name": "The Lion King",
+    "vaccines" : [{
+      "date": 123123213,
+      "name": "Vaccine #15"
+    },{
+      "date": 123123212,
+      "name": "Vaccine #16"
+    }],
+    "owner": {
+      "name": "Mufasa"
+    }
+ }
+```
+
 
 ## Architecture
 
