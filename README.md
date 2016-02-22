@@ -31,7 +31,8 @@ You can also post new animals.
 
 ## Architecture
 
-The server is divided in 3 layers, following Martin Fowler's 
+The server is divided in 3 layers, following Martin Fowler's Presentation Domain Data Layering.
+http://martinfowler.com/bliki/PresentationDomainDataLayering.html
 
 ### Domain layer
 
